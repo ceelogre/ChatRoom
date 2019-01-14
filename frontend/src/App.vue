@@ -1,0 +1,50 @@
+<template>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/chat.png">
+    <div v-on:cred="receiveCredentials">{{ cred }}</div>
+    <router-view msg="Welcome to FSE chat room "/>
+  </div>
+</template>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
+<script>
+export default {
+    data() {
+    return{
+      cred: null
+    }
+  },
+ mounted: function(){
+   console.log('Go!')
+    this.$socket.on('newMessage ', function(data) {
+      console.log('Received')
+      console.log(data)})
+  },
+ methods: {
+    receiveCredentials: function(creds){
+      this.cred = creds
+    }
+  }
+
+}
+</script>
