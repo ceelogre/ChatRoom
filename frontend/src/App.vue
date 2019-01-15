@@ -34,13 +34,7 @@ export default {
       cred: null
     }
   },
- mounted: function(){
-   console.log('Go!')
-    this.$socket.on('newMessage ', function(data) {
-      console.log('Received')
-      console.log(data)})
-  },
- methods: {
+  methods: {
     receiveCredentials: function(creds){
       this.cred = creds
     }

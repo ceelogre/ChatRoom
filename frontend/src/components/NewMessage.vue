@@ -1,8 +1,12 @@
 <template>
-    <form @submit.prevent="addNewMessage">
-        <input v-model="msg" autocomplete="off" />
-        <button>Send</button>
-    </form>
+    <div class="form-group" >
+        <form @submit.prevent="addNewMessage">
+            <div class="form-group">
+            <input class="form-control" v-model="msg" autocomplete="off" />
+            </div>
+            <button class="btn btn-lg btn-outline-success">POST</button>
+        </form>
+    </div>
 </template>
 
 <script>

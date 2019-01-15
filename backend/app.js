@@ -35,7 +35,7 @@ io.on('connection', function(socket){
                 let postedMessage = {
                     text: msg.text,
                     postedBy: msg.postedBy,
-                    postedAt: new Date(msg.postedAt).toLocaleString()
+                    postedAt: new Date(msg.postedAt).toString()
                 }
                 io.sockets.emit('receivedMsg', postedMessage);
             }
