@@ -1,6 +1,9 @@
-let express = require('express');
-let router = express.Router();
-let dbUtils = require('../utils/dbUtils')
+const express = require('express');
+const router = express.Router();
+const dbUtils = require('../utils/dbUtils')
+const jwt = require('jsonwebtoken')
+
+let serverResponse = {};
 let accountSuccessfullyCreated = 'false', areCredentialsValid = 'false'
 
 /* GET users listing. */
@@ -13,28 +16,50 @@ router.post('/signup', function(req, res){
   let saveUserPromise = dbUtils.saveUserToDb(newUser)
   saveUserPromise.then(
    () => {
-     accountSuccessfullyCreated = true
-     res.json({accountSuccessfullyCreated})
+     serverResponse.AccountSuccessfullyCreated = true
+     res.json({serverResponse})
     }
   )
   .catch(
     () => {
-     accountSuccessfullyCreated = false
-      res.json({accountSuccessfullyCreated})
+     serverResponse.AccountSuccessfullyCreated = false
+      res.json({serverResponse})
     }
   )
 })
 
 router.post('/signin', function(req, res){
   let user = req.body.creds;
+  let word = 'The penny dropped.'
+  jwt.verify(user, word, {
+    'algorithms': ['HS256']
+  }, function(err, decoded){
+    if(err){
+      throw err;
+    }
+    else{
+      user = decoded.sub
+    }
+  })
   dbUtils.authUser(user).then(
     (dbReponse) => {
-      if(dbReponse.length == 0 ){
-        areCredentialsValid = false
+      if(dbReponse == false ){
+        serverResponse.areCredentialsValid = false
       }
-      else
-        areCredentialsValid = true
-      res.json({areCredentialsValid})
+      else if(dbReponse == true){
+
+        serverResponse.areCredentialsValid = true
+        //Create a token
+        let payload = {
+          user: user.handle
+        }
+        let uToken = jwt.sign(payload, word, {
+          'algorithm': 'HS256'
+        })
+        serverResponse.uToken = uToken
+      }
+      //TO DO handle errors incase db response is an array
+      res.json({serverResponse})
     }
   )
   .catch(

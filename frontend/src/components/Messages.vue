@@ -27,7 +27,6 @@ methods:{
       chatBox.scrollTop = chatBox.scrollHeight;
     },
     formatUser: function(user){
-        console.log('dd', this.$store.getters.getLoggedInUser)
         return  (user == this.$store.getters.getLoggedInUser)? 'Me ': user
     },
 

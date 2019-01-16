@@ -51,7 +51,8 @@ export default {
         this.$emit('creds', credentials);
         sendSigninCredentials(credentials).then(
           (response) => {
-              if(response.areCredentialsValid){
+              if(response.serverResponse.areCredentialsValid){
+                  localStorage.uid = response.serverResponse.uToken;
                   this.$router.push({name: 'chat', params:{username: this.username}})
               }
               else{
