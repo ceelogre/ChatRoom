@@ -6,12 +6,12 @@ then
 `nodemon`  
 
 
-To run the client, `cd` into frontend then  
+To run the client, `cd` into frontend and run  
 `npm i`  
 then  
 `npm run serve  `
 
-or 
+or  
 `npm run build`  
-for a production ready app.
+for a production ready app.  
 Browse over to `localhost:8080` and Voila!
