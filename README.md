@@ -10,7 +10,6 @@ To run the client, `cd` into frontend and run
 `npm i`  
 then  
 `npm run serve  `
-
 or  
 `npm run build`  
 for a production ready app.  
