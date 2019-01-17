@@ -1,12 +1,12 @@
 # fseChatRoom
 Chat room app for FSE class.  
-To start the backend server, cd to backend and run  
+To start the backend server, `cd` into backend and run  
 ` npm i `   
 then   
 `nodemon`  
 
 
-To run the client, cd to frontend then  
+To run the client, `cd` into frontend then  
 `npm i`  
 then  
 `npm run serve  `
