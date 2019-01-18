@@ -1,4 +1,4 @@
-let dbConnection = require('./dbConnection')
+require('./dbConnection')
 let messageModel = require('../model/message')
 
 exports.saveMessage = function(msg){
@@ -16,4 +16,19 @@ exports.saveMessage = function(msg){
         })
     })
 
+}
+
+exports.getAllMessages = function(){
+    return new Promise((resolve, reject) => {
+        let allMessagesQuery = messageModel.find()
+        allMessagesQuery.select('-_id')
+        allMessagesQuery.limit(20)
+        allMessagesQuery.exec(function(err, results){
+            if(err)
+              reject(err)
+            else{
+                resolve(results)
+            }
+        })
+})
 }

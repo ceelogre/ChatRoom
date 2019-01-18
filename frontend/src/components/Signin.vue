@@ -10,6 +10,13 @@
             </ul>
           </div>
         </transition>
+        <transition name="accountToast" v-on:after-enter="accountToastActive">
+          <div v-if="successMsg">
+            <ul>
+              <li class="alert-success"> {{ msgFromRegister}} </li>
+            </ul>
+          </div>
+        </transition>
         <div class="form-group">
           <input type = "text" class="form-control" v-model="username" placeholder="Username">
         </div>
@@ -34,9 +41,19 @@ export default {
     return {
       username: null,
       key: null,
-      errors: []
+      errors: [],
+      successMsg: null,
+      msgFromRegister: null
     }
   },
+  created: function(){
+    let justCreatedAccount = (this.$route.params.toast)
+    if(justCreatedAccount){
+      this.successMsg = true
+      this.msgFromRegister = justCreatedAccount
+    }
+  },
+  
   methods: {
     onSubmit(){
       if(!this.username)
@@ -67,8 +84,10 @@ export default {
     },
     errorsActive(){
       this.errors = [];
+    },
+    accountToastActive(){
+      this.successMsg = false
     }
-
   },
 }
 </script>
@@ -92,10 +111,10 @@ li {
 a {
   color: #42b983;
 }
-.errors-enter-active{
+.errors-enter-active, .accountToast-enter-active{
   transition: opacity 3s;
 }
-.errors-enter /* .fade-leave-active below version 2.1.8 */ {
+.errors-enter /* .fade-leave-active below version 2.1.8 */, .accountToast-enter{
   opacity: 0;
 }
 

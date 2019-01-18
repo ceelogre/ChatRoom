@@ -57,8 +57,12 @@ export default {
         this.$emit('creds', credentials);
         sendSignupCredentials(credentials).then(
           (response) => {
-            if(response.accountSuccessfullyCreated){
-              this.$router.push('/')
+            if(response.serverResponse.AccountSuccessfullyCreated){
+              this.$router.push({name: 'signin', params: {toast: 'Account successfully created.'}})
+            }
+            else{
+              if(response.serverResponse.isHandleTaken)
+                this.errors.push('Username already taken')
             }
           }
         )

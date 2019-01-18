@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     msgs:[],
-    loggedInUser: null
+    loggedInUser: null,
+    left: null
   },
   getters: {
     getLoggedInUser: function(state){

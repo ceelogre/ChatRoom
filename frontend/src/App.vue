@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/chat.png">
-    <div v-on:cred="receiveCredentials">{{ cred }}</div>
     <router-view msg="Welcome to FSE chat room "/>
   </div>
 </template>
@@ -29,16 +28,5 @@
 </style>
 <script>
 export default {
-    data() {
-    return{
-      cred: null
-    }
-  },
-  methods: {
-    receiveCredentials: function(creds){
-      this.cred = creds
-    }
-  }
-
 }
 </script>

@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 let http = require('http').Server(app);
-let io = require('socket.io')(http);
+let ioServer = require('socket.io')(http);
 
 app.use(cors());
 app.use(logger('dev'));
@@ -21,13 +21,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/handshake', indexRouter);
+app.use('/chats', indexRouter);
 
-io.on('connection', function(socket){
-    console.log('New use onnected.', socket.id);
-    socket.emit('connect', true)
-    socket.on('disconnect', function(){
-        console.log('Client disconnected. ID', socket.id);
+ioServer.on('connection', function(socket){
+    socket.on('connection', function(data){
+        socket.join('fse room', () => {
+            socket.broadcast.to('fse room').emit('join', data)
+        })
+        console.log('Pre ', data)
+    })
+    socket.on('disconnection', function(data){
+        socket.leave('fse room', () => {
+          socket.broadcast.to('fse room').emit('left', data)
+        })
+        console.log('One connection lost. ')
     })
     socket.on('newMsg', function(data){
         chatUtils.saveMessage(data).then(
@@ -37,7 +44,7 @@ io.on('connection', function(socket){
                     postedBy: msg.postedBy,
                     postedAt: new Date(msg.postedAt).toString()
                 }
-                io.sockets.emit('receivedMsg', postedMessage);
+                ioServer.to('fse room').emit('receivedMsg', postedMessage);
             }
         )
         .catch(

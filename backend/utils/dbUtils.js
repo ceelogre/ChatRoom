@@ -6,19 +6,36 @@ exports.saveUserToDb= function(newUser){
 
 return new Promise((resolve, reject) => {
 
-    //Encrypt the password
-    let salt = bcrypt.genSaltSync()
-    let hash = bcrypt.hashSync(newUser.key, salt)
-    newUser.key = hash;
+    //Check if the user exist
+    let query = userModel.find({'handle': newUser.handle})
 
-    let user = new userModel(newUser)
-    user.save(function(err, results){
-        if(err){
-            console.log('Create user err', err)
-            reject(err);
-        }
+    query.select('handle')
+    query.exec(function(err, results){
+        if(err)
+          reject(err)
         else{
-            resolve(results)
+            //Username already exists
+            if(results.length != 0){
+                resolve('Exist')
+            }
+            else{
+                //Encrypt the password
+                let salt = bcrypt.genSaltSync()
+                let hash = bcrypt.hashSync(newUser.key, salt)
+                newUser.key = hash;
+
+                let user = new userModel(newUser)
+                user.save(function(err, results){
+                    if(err){
+                        console.log('Create user err', err)
+                        reject(err);
+                    }
+                    else{
+                        resolve(results)
+                    }
+                })
+
+            }
         }
     })
 })

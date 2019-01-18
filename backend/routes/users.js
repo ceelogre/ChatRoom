@@ -4,7 +4,7 @@ const dbUtils = require('../utils/dbUtils')
 const jwt = require('jsonwebtoken')
 
 let serverResponse = {};
-let accountSuccessfullyCreated = 'false', areCredentialsValid = 'false'
+let areCredentialsValid = 'false'
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -15,8 +15,15 @@ router.post('/signup', function(req, res){
   let newUser = req.body.creds;
   let saveUserPromise = dbUtils.saveUserToDb(newUser)
   saveUserPromise.then(
-   () => {
-     serverResponse.AccountSuccessfullyCreated = true
+   (dbReponse) => {
+    if(dbReponse == 'Exist'){
+      serverResponse.AccountSuccessfullyCreated = false;
+      serverResponse.isHandleTaken = true
+    }
+
+    else{
+      serverResponse.AccountSuccessfullyCreated = true
+    }
      res.json({serverResponse})
     }
   )
