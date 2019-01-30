@@ -1,5 +1,5 @@
 require('./dbConnection')
-let messageModel = require('../model/message')
+let messageModel = require('../model/message').messageModel
 
 exports.saveMessage = function(msg){
 

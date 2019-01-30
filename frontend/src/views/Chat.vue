@@ -11,7 +11,7 @@ import NewMessageForm from '@/components/NewMessage.vue'
 import Messages from '@/components/Messages.vue'
 import Vue from 'vue'
 import VueSocketIO from 'vue-socket-io'
-Vue.use(VueSocketIO, 'http://localhost:3001')
+Vue.use(VueSocketIO, 'http://172.29.52.77:3001')
 
 export default {
   name: 'chat',

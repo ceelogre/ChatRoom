@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const server = 'http://localhost:3000'
+const server = 'http://172.29.52.77:3000'
 
 export { getAllMessages }
 

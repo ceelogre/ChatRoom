@@ -9,4 +9,4 @@ messageSchema = new Schema({
 
 let messageModel = new mongoose.model('message', messageSchema);
 
-module.exports= messageModel;
+exports.messageModel= messageModel;
