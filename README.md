@@ -1,5 +1,5 @@
-# fseChatRoom
-Chat room app for FSE class.  
+# MeHeal
+Chat implementation using Socket
 To start the backend server, `cd` into backend and run  
 ` npm i `   
 then   
