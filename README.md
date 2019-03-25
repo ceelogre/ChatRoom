@@ -1,5 +1,5 @@
 # MeHeal
-Chat implementation using Socket
+Chat implementation using Socket  
 To start the backend server, `cd` into backend and run  
 ` npm i `   
 then   
